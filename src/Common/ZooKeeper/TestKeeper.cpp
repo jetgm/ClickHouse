@@ -213,10 +213,12 @@ std::pair<ResponsePtr, Undo> TestKeeperCreateRequest::process(TestKeeper::Contai
             created_node.is_sequental = is_sequential;
             std::string path_created = path;
 
+            /// Increment sequential number even if node is not sequential
+            ++it->second.seq_num;
+            
             if (is_sequential)
             {
                 auto seq_num = it->second.seq_num;
-                ++it->second.seq_num;
 
                 std::stringstream seq_num_str;      // STYLE_CHECK_ALLOW_STD_STRING_STREAM
                 seq_num_str.exceptions(std::ios::failbit);
@@ -235,8 +237,7 @@ std::pair<ResponsePtr, Undo> TestKeeperCreateRequest::process(TestKeeper::Contai
                 --undo_parent.stat.cversion;
                 --undo_parent.stat.numChildren;
 
-                if (is_sequential)
-                    --undo_parent.seq_num;
+                --undo_parent.seq_num;
             };
 
             ++it->second.stat.cversion;
