@@ -230,7 +230,7 @@ std::pair<ResponsePtr, Undo> TestKeeperCreateRequest::process(TestKeeper::Contai
             response.path_created = path_created;
             container.emplace(path_created, std::move(created_node));
 
-            undo = [&container, path_created, is_sequential = is_sequential, parent_path = it->first]
+            undo = [&container, path_created, parent_path = it->first]
             {
                 container.erase(path_created);
                 auto & undo_parent = container.at(parent_path);
