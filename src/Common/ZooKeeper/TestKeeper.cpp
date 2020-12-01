@@ -215,7 +215,7 @@ std::pair<ResponsePtr, Undo> TestKeeperCreateRequest::process(TestKeeper::Contai
 
             /// Increment sequential number even if node is not sequential
             ++it->second.seq_num;
-            
+
             if (is_sequential)
             {
                 auto seq_num = it->second.seq_num;
